@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Your Title</title>
+  <title>Cobb&#39;s Blog</title>
   <icon>https://www.gravatar.com/avatar/f2823b68f4b4a07d10175ab6a8ca7076</icon>
-  <subtitle>This is hexo theme</subtitle>
+  <subtitle>Welcome to my kingdom</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite-url/"/>
+  <link href="http://wzwdi.cn/"/>
   <updated>2019-03-01T14:59:48.444Z</updated>
-  <id>http://yoursite-url/</id>
+  <id>http://wzwdi.cn/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>Cobb</name>
     <email>2662735959@qq.com</email>
   </author>
   
@@ -18,8 +18,8 @@
   
   <entry>
     <title>[Hexo] Theme BeanTech</title>
-    <link href="http://yoursite-url/2017/03/18/hexo-theme-beantech/"/>
-    <id>http://yoursite-url/2017/03/18/hexo-theme-beantech/</id>
+    <link href="http://wzwdi.cn/uncategorized/cjsreop340001f6k5e1gzox0i/hexo-theme-beantech/"/>
+    <id>http://wzwdi.cn/uncategorized/cjsreop340001f6k5e1gzox0i/hexo-theme-beantech/</id>
     <published>2017-03-18T02:51:24.000Z</published>
     <updated>2019-03-01T14:59:48.444Z</updated>
     
@@ -36,9 +36,9 @@
     </summary>
     
     
-      <category term="Hexo" scheme="http://yoursite-url/tags/Hexo/"/>
+      <category term="Hexo" scheme="http://wzwdi.cn/tags/Hexo/"/>
     
-      <category term="Blog" scheme="http://yoursite-url/tags/Blog/"/>
+      <category term="Blog" scheme="http://wzwdi.cn/tags/Blog/"/>
     
   </entry>
   
