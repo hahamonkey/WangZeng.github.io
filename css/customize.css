@@ -1,0 +1,23 @@
+a.weixin {
+  position: relative; }
+
+.weixin img {
+  position: absolute;
+  padding: 0 !important;
+  z-index: 99;
+  bottom: -110px;
+  right: 0px;
+  width: 100px;
+  height: 100px;
+  transform: scale(0);
+  transform-origin: top right;
+  opacity: 0;
+  border: .2rem solid #0085ba;
+  box-shadow: 1px 1px 5px #555;
+  -webkit-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out; }
+
+.weixin:hover img {
+  transform: scale(1);
+  opacity: 1; }
