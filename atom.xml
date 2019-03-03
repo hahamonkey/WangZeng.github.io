@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Cobb&#39;s Blog</title>
   <icon>https://www.gravatar.com/avatar/f2823b68f4b4a07d10175ab6a8ca7076</icon>
-  <subtitle>Welcome to my kingdom</subtitle>
+  
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wzwdi.cn/"/>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>[Hexo] Theme BeanTech</title>
-    <link href="http://wzwdi.cn/uncategorized/cjsshub5p0001vm46ri8t4dzo/hexo-theme-beantech/"/>
-    <id>http://wzwdi.cn/uncategorized/cjsshub5p0001vm46ri8t4dzo/hexo-theme-beantech/</id>
+    <link href="http://wzwdi.cn/uncategorized/cjsslqusl0002b4468gsqea4o/hexo-theme-beantech/"/>
+    <id>http://wzwdi.cn/uncategorized/cjsslqusl0002b4468gsqea4o/hexo-theme-beantech/</id>
     <published>2017-03-18T02:51:24.000Z</published>
     <updated>2019-03-01T14:59:48.444Z</updated>
     

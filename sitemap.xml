@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://wzwdi.cn/tags/index.html</loc>
+    <loc>http://wzwdi.cn/about/index-1.html</loc>
     
-    <lastmod>2019-03-01T14:59:48.577Z</lastmod>
+    <lastmod>2019-03-03T05:55:10.293Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://wzwdi.cn/about/index.html</loc>
+    <loc>http://wzwdi.cn/tags/index.html</loc>
     
-    <lastmod>2019-03-01T14:59:48.460Z</lastmod>
+    <lastmod>2019-03-01T14:59:48.577Z</lastmod>
     
   </url>
   
@@ -23,7 +23,14 @@
   </url>
   
   <url>
-    <loc>http://wzwdi.cn/uncategorized/cjsshub5p0001vm46ri8t4dzo/hexo-theme-beantech/</loc>
+    <loc>http://wzwdi.cn/about/index.html</loc>
+    
+    <lastmod>2019-03-01T14:59:48.460Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://wzwdi.cn/uncategorized/cjsslqusl0002b4468gsqea4o/hexo-theme-beantech/</loc>
     
     <lastmod>2019-03-01T14:59:48.444Z</lastmod>
     
