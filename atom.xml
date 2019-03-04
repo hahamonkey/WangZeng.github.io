@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Cobb&#39;s Blog</title>
   <icon>https://www.gravatar.com/avatar/f2823b68f4b4a07d10175ab6a8ca7076</icon>
-  
+  <subtitle>旁观者的姓名永远爬不到比赛的计分板上</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://wzwdi.cn/"/>
-  <updated>2019-03-01T14:59:48.444Z</updated>
+  <updated>2019-03-04T12:30:26.334Z</updated>
   <id>http://wzwdi.cn/</id>
   
   <author>
@@ -17,9 +17,31 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Hexo+Github搭建博客</title>
+    <link href="http://wzwdi.cn/uncategorized/cjsubow3y00016i469iomlqfz/Hexo-Github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://wzwdi.cn/uncategorized/cjsubow3y00016i469iomlqfz/Hexo-Github搭建博客/</id>
+    <published>2019-03-04T06:47:07.000Z</published>
+    <updated>2019-03-04T12:30:26.334Z</updated>
+    
+    <content type="html"><![CDATA[<p>一直打算重新整一个博客，由于实习和准备毕业论文的原因搁置下来。刚好利用这几天的闲余时间，也在想要用什么方式去实现，最终选择了<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">Hexo</a>。这里分享一下从0到1以及这个过程中遇到的一些问题，又是如何解决的。<strong>(注：本文基于Mac系统)</strong></p><p><img src="http://note.youdao.com/yws/res/11678/WEBRESOURCEde9fde15a4e798161455cffbff569dbb" alt="hexo"></p><p>使用GitHub Pages + Hexo有以下几点好处：<a id="more"></a></p><ul><li>无需关注生成网页源码的细节，只需用markdown攥写你的文章</li><li>github免费提供无限资源空间</li><li>Hexo基于Node.js，其对数据的静态处理方式来的更高效</li><li>相对于搭建独立博客，有绝对的控制权，管理方便</li></ul><hr><h2><span id="一-开始之前">一、开始之前</span></h2><h3><span id="i-环境配置">I. 环境配置</span></h3><ul><li>安装<a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a></li><li>安装<a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a></li></ul><h3><span id="ii-创建github项目">II. 创建Github项目</span></h3><ol><li>打开<a href="https://github.com/" target="_blank" rel="noopener">github</a>，新建项目，项目名称推荐<code>username.github.io</code>(其中username为你的github名) 的形式，原因后面会提到，另外勾上 <code>README</code> 初始化选项；</li><li>打开<code>setting</code>，找到<code>Github Pages</code>，<code>choose a theme</code>选择一个主题。重新进入设置页找到 Github Pages</li><li>点击 <a href="https://hahamonkey.github.io" target="_blank" rel="noopener">https://hahamonkey.github.io</a> 就会出现相应的网页了</li></ol><h2><span id="二-hexo安装">二、Hexo安装</span></h2><h3><span id="i-安装hexo">I. 安装Hexo</span></h3><p>首先，在合适的地方新建文件夹，例如在D盘新建Blog(D:\Blog)目录。接着打开控制台，定位到博客目录，键入下面的指令：</p><pre><code>npm install hexo-cli -g  （可能会有几条报错语句，无视就好）npm install hexo --save hexo -v (查看是否安装成功)</code></pre><p>接着初始化博客<code>hexo init</code>，<code>hexo g</code>生成静态资源，<code>hexo s</code>打开本地服务器预览网站。到此，单独的两部分都完成了。</p><h3><span id="ii-本地代码远程连接github">II. 本地代码远程连接Github</span></h3><ol><li>控制台输入：</li></ol><pre><code>git config --global user.name &quot;username&quot;   // username-&gt;github用户名git config --global user.email &quot;email&quot;  // email-&gt;github绑定邮箱</code></pre><ol start="2"><li>生成密钥 SSH key:</li></ol><pre><code>ssh-keygen -t rsa -C &quot;email&quot;eval &quot;$(ssh-agent -s)&quot;   (添加密钥到ssh-agent)ssh-add ~/.ssh/id_rsa  (添加生成的SSH key到ssh-agent)</code></pre><ol start="3"><li>打开<a href="https://github.com" target="_blank" rel="noopener">github</a>，新建SSH。接着打开控制台终端定位到根目录，输入：</li></ol><pre><code>cd ~/.sshopen .</code></pre><p>复制<code>id_rsa.pub</code>文件中的内容到新建的SSH中</p><ol start="4"><li>打开 Blog 根目录下的_config.yml文件，在文件的末尾添加如下配置：</li></ol><pre><code>deploy:   type: git  repository: https://github.com/hahamonkey/hahamonkey.github.io  branch: master（注意： 冒号后跟空格符）</code></pre><h3><span id="iii-写作">III. 写作</span></h3><p>到了这一步，搭建hexo博客基本上算是完成了，接下来可以看一下搭建的博客是什么样子。记得每次新建文章之前 <code>hexo clean</code> 删除缓存文件，防止修改分类和标签或者修改主题之后无效，好了，那就来试一下吧：</p><pre><code>hexo clean hexo new post filename    生成文件后，markdown语法编辑，具体参考 hexo官方文档hexo g      生成静态文件hexo s      打开本地服务器预览（选择性操作）hexo d      部署到 Github Pages</code></pre><p>接着打开 <a href="https://hahamonkey.github.io" target="_blank" rel="noopener">https://hahamonkey.github.io</a> 查看效果</p><h3><span id="iv-更换主题">IV. 更换主题</span></h3><p>你可能会觉得一开始选择的博客主题不太理想，好吧，当然会考虑到，也给你提供了一些<a href="https://hexo.io/themes/index.html" target="_blank" rel="noopener">选择</a>。比较之下，这款<a href="https://github.com/chaooo/hexo-theme-BlueLake" target="_blank" rel="noopener">BlueLake</a>甚合我意，那就开始吧：</p><ol><li>首先，下载这个主题</li></ol><pre><code>git clone https://github.com/chaooo/hexo-theme-BlueLake.git themes/bluelake</code></pre><ol start="2"><li>打开Blog根目录下的 _config.yml 文件，找到 <code>theme</code> 字段,设置 <code>theme: bluelake</code></li><li>清除缓存 <code>hexo clean</code>，生成静态文件 <code>hexo g</code>，部署到 Github Pages <code>hexo d</code>(之后统一简称“重新部署”)</li></ol><h3><span id="v-绑定域名">V. 绑定域名</span></h3><p>在这之前，博客就算是已经完成了，但是没有一个专有的域名就会觉得档次跟不上。之前我们在 github 新建项目的时候强调要用自己的 <code>github 用户名</code> 开始，以<code>.github.io</code> 作为后缀，如果不是这样，当然可以，那我们打开博客的地址可能就是下面这样：</p><blockquote><p><a href="https://username.github.io/xxxx.github.io" target="_blank" rel="noopener">https://username.github.io/xxxx.github.io</a></p></blockquote><p>很怪异不是吗？不仅是为了方便，也是防止不必要的小麻烦。下面就说如何绑定域名</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一直打算重新整一个博客，由于实习和准备毕业论文的原因搁置下来。刚好利用这几天的闲余时间，也在想要用什么方式去实现，最终选择了&lt;a href=&quot;https://hexo.io/zh-cn/docs/index.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;。这里分享一下从0到1以及这个过程中遇到的一些问题，又是如何解决的。&lt;strong&gt;(注：本文基于Mac系统)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://note.youdao.com/yws/res/11678/WEBRESOURCEde9fde15a4e798161455cffbff569dbb&quot; alt=&quot;hexo&quot;&gt;&lt;/p&gt;
+&lt;p&gt;使用GitHub Pages + Hexo有以下几点好处：
+    
+    </summary>
+    
+    
+      <category term="Hexo" scheme="http://wzwdi.cn/tags/Hexo/"/>
+    
+  </entry>
+  
+  <entry>
     <title>[Hexo] Theme BeanTech</title>
-    <link href="http://wzwdi.cn/uncategorized/cjstua55i0002rd46cy5bro06/hexo-theme-beantech/"/>
-    <id>http://wzwdi.cn/uncategorized/cjstua55i0002rd46cy5bro06/hexo-theme-beantech/</id>
+    <link href="http://wzwdi.cn/uncategorized/cjsubow4600036i468il6s9iu/hexo-theme-beantech/"/>
+    <id>http://wzwdi.cn/uncategorized/cjsubow4600036i468il6s9iu/hexo-theme-beantech/</id>
     <published>2017-03-18T02:51:24.000Z</published>
     <updated>2019-03-01T14:59:48.444Z</updated>
     
