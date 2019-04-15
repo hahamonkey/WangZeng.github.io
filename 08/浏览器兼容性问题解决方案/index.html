@@ -1,757 +1,152 @@
-<!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-
-
-<html class="theme-next muse use-motion" lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="css/main.css?v=7.1.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.1.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
-    back2top: true,
-    back2top_sidebar: false,
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
-
-  <meta name="description" content="作为一个前端开发人员，在面试中被问及浏览器的兼容性问题几乎是必不可免的。这个问题我觉得主要考验两点能力：  是否经验丰富，能够快速的投入到工作当中 是否时刻关注前沿技术，针对某个问题对于新的解决方案是否有过了解或者说你是否能够举一反三，有好的总结能力">
-<meta name="keywords" content="web">
-<meta property="og:type" content="article">
-<meta property="og:title" content="常见浏览器兼容性问题解决方案">
-<meta property="og:url" content="http://wzwdi.cn/08/浏览器兼容性问题解决方案/index.html">
-<meta property="og:site_name" content="Cobb&#39;s Blog">
-<meta property="og:description" content="作为一个前端开发人员，在面试中被问及浏览器的兼容性问题几乎是必不可免的。这个问题我觉得主要考验两点能力：  是否经验丰富，能够快速的投入到工作当中 是否时刻关注前沿技术，针对某个问题对于新的解决方案是否有过了解或者说你是否能够举一反三，有好的总结能力">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-09T02:19:08.674Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常见浏览器兼容性问题解决方案">
-<meta name="twitter:description" content="作为一个前端开发人员，在面试中被问及浏览器的兼容性问题几乎是必不可免的。这个问题我觉得主要考验两点能力：  是否经验丰富，能够快速的投入到工作当中 是否时刻关注前沿技术，针对某个问题对于新的解决方案是否有过了解或者说你是否能够举一反三，有好的总结能力">
-
-
-
-  <link rel="alternate" href="../../atom.xml" title="Cobb's Blog" type="application/atom+xml">
-
-
-
-  
-  
-  <link rel="canonical" href="http://wzwdi.cn/08/浏览器兼容性问题解决方案/">
-
-
-
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
-
-  <title>常见浏览器兼容性问题解决方案 | Cobb's Blog</title>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-    <a href="https://github.com/hahamonkey"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_orange_ff7600.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cobb's Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-    
-      
-        <p class="site-subtitle">旁观者的姓名永远爬不到比赛的计分板上</p>
-      
-    
-    
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-    
-      
-    
-
-    
-
-    <a rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
-
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
-      
-    
-
-    
-
-    <a rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-
-  </li>
-
-      
-      
-    </ul>
-  
-
-  
-    
-
-  
-
-  
-</nav>
-
-
-
-  
-
-
-
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wzwdi.cn">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cobb">
-      <meta itemprop="description" content="志不强者智不达,一个有态度的前端攻城狮,走近Cobb,共同进步">
-      <meta itemprop="image" content="../../images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cobb's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">常见浏览器兼容性问题解决方案
-
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-08 20:13:45" itemprop="dateCreated datePublished" datetime="2019-03-08T20:13:45+08:00">2019-03-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-09 10:19:08" itemprop="dateModified" datetime="2019-03-09T10:19:08+08:00">2019-03-09</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>作为一个前端开发人员，在面试中被问及浏览器的兼容性问题几乎是必不可免的。这个问题我觉得主要考验两点能力：</p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="志不强者智不达,一个有态度的前端攻城狮,走近Cobb,共同进步"><title>常见浏览器兼容性问题解决方案 | Cobb's Blog</title><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="../../css/style.css?v=2.0.3"><link rel="stylesheet" type="text/css" href="../../css/highlight.css?v=2.0.3"><link rel="Shortcut Icon" href="../../favicon.ico"><link rel="bookmark" href="../../favicon.ico"><link rel="apple-touch-icon" href="../../apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="../../apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="../../atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">常见浏览器兼容性问题解决方案</h1><a id="logo" href="../../.">Cobb's Blog</a><p class="description">旁观者的姓名永远爬不到比赛的计分板上</p></div><div id="nav-menu"><a href="../../." class="current"><i class="fa fa-home"> 首页</i></a><a href="../../archives/"><i class="fa fa-archive"> 归档</i></a><a href="../../about/"><i class="fa fa-user"> 关于</i></a><a href="../../atom.xml"><i class="fa fa-rss"> RSS</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="Arama"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">常见浏览器兼容性问题解决方案</h1><div class="post-meta"><a href="#comments" class="comment-count"><i id="changyan_count_unit" data-xid="08/浏览器兼容性问题解决方案/"></i>留言,<i id="changyan_parti_unit" data-xid="08/浏览器兼容性问题解决方案/"></i>参与</a><p><span class="date">03 08, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h2><span id="前言">前言</span></h2>
+<p>作为一个前端开发人员，在面试中被问及浏览器的兼容性问题几乎是必不可免的。这个问题我觉得主要考验两点能力：</p>
 <ul>
 <li>是否经验丰富，能够快速的投入到工作当中</li>
 <li>是否时刻关注前沿技术，针对某个问题对于新的解决方案是否有过了解或者说你是否能够举一反三，有好的总结能力<a id="more"></a></li>
 </ul>
-<p>由于CSS</p>
-
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="../../tags/web/" rel="tag"># web</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="../../07/CSS三角形(转载)/" rel="next" title="CSS三角形【转载】">
-                <i class="fa fa-chevron-left"></i> CSS三角形【转载】
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="../../13/123/" rel="prev" title="123">
-                123 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-  </div>
-
-
-          </div>
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Cobb</p>
-              <div class="site-description motion-element" itemprop="description">志不强者智不达,一个有态度的前端攻城狮,走近Cobb,共同进步</div>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="../../archives/">
-                
-                    <span class="site-state-item-count">6</span>
-                    <span class="site-state-item-name">日志</span>
-                  </a>
-                </div>
-              
-
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">3</span>
-                    <span class="site-state-item-name">标签</span>
-                  
-                </div>
-              
-            </nav>
-          
-
-          
-            <div class="feed-link motion-element">
-              <a href="../../atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
-      </div>
-
-      
-
-      
-
-    </div>
-  </aside>
-  
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Cobb</span>
-
-  
-
-  
-</div>
-
-
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.0</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
-  </div>
-
-  
-
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
+<p>其实，对于任何Web项目，不管用于开发的平台是什么，跨浏览器兼容性错误都是不可避免的。由于市场上浏览器种类众多，不同浏览器其内核不尽相同，所以各浏览器对网页的解析就有一定出入，这也是导致浏览器兼容问题的主要原因。下面列举一些市场上常见的浏览器：</p>
+<blockquote>
+<ol>
+<li><strong>Webkit</strong>：Safari、Chrome等，使用此内核的浏览器市场占有率最大</li>
+<li><strong>Trident</strong>：IE、MaxThon、360、搜狗浏览器等，该类内核的浏览器市场占有率屈居第二</li>
+<li><strong>GecKo</strong>：Netscaper6及以上版本，浏览器代表有：MozillaSuite、SeaMonkey等</li>
+<li><strong>Presto</strong>: 原来Opera7及以上均为此内核，不过现在基本淘汰使用Blink内核，Blink内核作为Webkit的分支</li>
+</ol>
+</blockquote>
+<p>接下来，我们进入正题，讨论浏览器的兼容性问题无非就是三个方面：<code>HTML和CSS兼容性</code>、<code>交互兼容性</code>以及<code>浏览器hack</code>三个方面，本文中简单列举一些常见的兼容性问题以及相应的解决方案：</p>
+<h2><span id="html-和-css-兼容">HTML 和 CSS 兼容</span></h2>
+<h3><span id="1-浏览器的初始化样式不同导致的兼容性问题">1. 浏览器的初始化样式不同导致的兼容性问题</span></h3>
+<p>针对这个问题很多人会采取 <code>* {margin: 0; padding: 0;}</code> 的方式，这种方式简单方便的一次性重置所有HTML网页元素的浏览器样式，代码少，控制量大。与此同时，由于过于暴力，方便的同时重置了本不需要重置的样式，例如table元素，这个时候就要需要为它单独再设置默认样式，增加了代码量。目前大多数采取的方式是通过 <code>Normalize.css</code> 来抹平差异化,定制自己的 <code>reset.css</code>也当然可以，不过要尽量避免通配符形式全局重置的暴力写法。对于IE浏览器和非IE浏览器之间的区别，基本使用 normarize.css 和 reset.css 能处理大部分的问题。</p>
+<h3><span id="2-浏览器对-css3-的支持">2. 浏览器对 CSS3 的支持</span></h3>
+<p>页面终究是离不开浏览器的渲染，并不是所有的浏览器都支持CSS3的特性。幸运的是，CSS3特性大部分都已经有了很好的浏览器支持度，各浏览器对CSS3的支持也是越来越完善，但仍然存在部分属性在使用的时候加上浏览器前缀，浏览器内核与前缀对应关系如下（不同浏览器对具体属性的兼容可以参考 <a href="https://caniuse.com/" target="_blank" rel="noopener">caniuse</a>）：<br>
+<img src="/img/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%80%A7/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%80%A7.png" alt></p>
+<h3><span id="3-透明属性的兼容设置">3. 透明属性的兼容设置</span></h3>
+<p>在还原设计稿的时候常常会用到透明属性，但是 IE9 以下浏览器不支持 <code>opacity</code> 属性。下面给出不同版本 IE浏览器的解决方案：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">opacity</span>: 0.5;</span><br><span class="line"></span><br><span class="line"><span class="attribute">filter</span>: alpha(opcaity = 50); // IE6 - IE8 习惯使用filter滤镜属性来进行实现</span><br><span class="line">filter： progid:DXImageTransform.Microsoft.Alpha(style = 0, opacity = 50); // IE4-IE9都支持滤镜写法progid:DXImageTransform.Microsoft.Alpha(Opacity=xx)</span><br></pre></td></tr></table></figure>
+<h3><span id="4-外边距合并问题">4. 外边距合并问题</span></h3>
+<p>块的顶部外边距和底部外边距有时候会重合为单个外边距，其大小为两值中间的最大值，这种行为就被称为外边距合并。通常情况下外边距合并发生在三种情况下：</p>
+<ul>
+<li>相邻兄弟元素：两个兄弟元素之间的外边距回去两个元素外边距最大值</li>
+<li>父元素和子元素：同样取两个外边距中的最大值</li>
+<li>空元素：本身的上下外边距合并，取其中最大值</li>
+</ul>
+<p>那么，该如何阻止这种问题的发生？因为只有是静态流的元素才会发生外边距合并，故设置浮动、定位都可以使得不会发生外边距合并的问题，但 <code>inline-block</code>是个例外，它既没有脱离文档流，但是它也不会发生这种现象。另外，由于 margin需要直接接触才会合并，根据盒子模型，针对第二种父元素和子元素，可以给父元素设置<code>border</code>或<code>padding</code>属性也是可以防止外边距合并的发生的。</p>
+<h3><span id="5-chrome下默认文本解析">5、chrome下默认文本解析</span></h3>
+<p>Chrome浏览器会将小于12px的文本强制按照12px来解析。chrome27以前的解决办法通过设置<code>-webkit-text-size-adjust: none:</code>来解决，现在可以通过CSS3的变换属性缩放来解决</p>
+<h3><span id="6-部分浏览器设置较小高度标签失去控制">6. 部分浏览器设置较小高度标签失去控制</span></h3>
+<p>在 IE6、7 和遨游浏览器中设置较小高度标签（一般小于10px）会超出设置的高度。出现这种问题的原因是IE8之前的浏览器会给标签一个最小默认的行高的高度，即使标签是空的，标签的高度还是会达到默认的行高。这种情况下给超出高度的标签设置<code>overflow: hidden;</code>或者设置行高小于设置的高度。</p>
+<h3><span id="7-css-hack">7. CSS Hack</span></h3>
+<p>兼容性属性设置，注意书写的顺序：<strong>优先写高等级浏览器支持方式、优先写支持浏览器多的方式</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*以 color 属性为例，注意书写顺序*/</span></span><br><span class="line"><span class="selector-id">#box</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#f00</span>;   <span class="comment">//所有浏览器都支持</span></span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#0f0</span> <span class="meta">!important</span>;   <span class="comment">//只有 IE6 无效</span></span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#00f</span>\<span class="number">9</span>;  <span class="comment">//所有 IE 都有效</span></span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#ff0</span>\<span class="number">0</span>;  <span class="comment">//IE8+ 有效</span></span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#f0f</span>\<span class="number">9</span>\<span class="number">0</span>; <span class="comment">//IE9+ 有效</span></span><br><span class="line">  *<span class="attribute">color</span>: <span class="number">#fff</span>;  <span class="comment">//仅 IE6, IE7 有效</span></span><br><span class="line">  <span class="selector-id">#color</span>: <span class="number">#0ff</span>;  <span class="comment">//仅 IE6, IE7 有效</span></span><br><span class="line">  +<span class="attribute">color</span>: <span class="number">#800</span>;  <span class="comment">//仅 IE6, IE7 有效</span></span><br><span class="line">  -<span class="attribute">color</span>: <span class="number">#008</span>;  <span class="comment">//只有 IE6 有效</span></span><br><span class="line">  _color: <span class="number">#080</span>;  <span class="comment">//只有 IE6 有效</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="交互兼容性">交互兼容性</span></h2>
+<h3><span id="1-获取兄弟节点">1. 获取兄弟节点</span></h3>
+<p>ie8以前不支<code>·previousElementSibling</code>和<code>nextElementSibling</code>,以及诸如此类带有Element的元素属性。利用previousSibling和 nextSibling等不带Element的属性实现如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取下一个紧邻的兄弟元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getNextElement</span><span class="params">(element)</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> ele = element;</span><br><span class="line">  <span class="keyword">if</span>(ele.nextElementSibling) <span class="keyword">return</span> ele.nextElementSibling;</span><br><span class="line">  <span class="keyword">do</span>&#123;</span><br><span class="line">    ele = ele.nextSibling;</span><br><span class="line">  &#125;<span class="keyword">while</span>(ele &amp;&amp; ele.nodeType !== <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">return</span> ele;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取上一个紧邻的兄弟元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPreviousElement</span><span class="params">(element)</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> ele = element;</span><br><span class="line">  <span class="keyword">if</span>(ele.perviousElementSibling) <span class="keyword">return</span> ele.perviousElementSibling;</span><br><span class="line">  <span class="keyword">do</span>&#123;</span><br><span class="line">    ele = ele.perviousSibling;</span><br><span class="line">  &#125;<span class="keyword">while</span>(ele &amp;&amp; ele.nodeType !== <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">return</span> ele;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取第一个子元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFirstElement</span><span class="params">(parent)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">parent</span>.firstElementChild) <span class="keyword">return</span> <span class="keyword">parent</span>.firstElementChild;</span><br><span class="line">  <span class="keyword">var</span> ele = <span class="keyword">parent</span>.firstChild;</span><br><span class="line">  <span class="keyword">while</span>(ele &amp;&amp; ele.nodeType !== <span class="number">1</span>) ele = ele.nextSibling;</span><br><span class="line">  <span class="keyword">return</span> ele;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取最后一个子元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getLastElement</span><span class="params">(parent)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">parent</span>.LastElementChild) <span class="keyword">return</span> <span class="keyword">parent</span>.LastElementChild;</span><br><span class="line">  <span class="keyword">var</span> ele = <span class="keyword">parent</span>.lastChild;</span><br><span class="line">  <span class="keyword">while</span>(ele &amp;&amp; ele.nodeType !== <span class="number">1</span>) ele = ele.perviousSibling;</span><br><span class="line">  <span class="keyword">return</span> ele;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取所有兄弟元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sibling</span><span class="params">(ele)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!ele) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> elements = [ ];</span><br><span class="line">  <span class="keyword">var</span> el = ele.previousSibling;</span><br><span class="line">  <span class="keyword">while</span>(el)&#123;</span><br><span class="line">  <span class="keyword">if</span>(el.nodeType === <span class="number">1</span>)</span><br><span class="line">    elements.push(el);</span><br><span class="line">  el = el.previousSibling;</span><br><span class="line">  &#125;</span><br><span class="line">  el = element.nextSibling;</span><br><span class="line">  <span class="keyword">while</span>(el)&#123;</span><br><span class="line">  <span class="keyword">if</span>(el.nodeType === <span class="number">1</span>)</span><br><span class="line">    elements.push(el);</span><br><span class="line">  el = el.nextSibling;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> elements;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外，IE中有一些很好用的 DOM 方法，但是其他浏览器却没有，比如:</p>
+<ul>
+<li>ele.swapNode(anotherEle)用来交换节点</li>
+<li>ele.removeNode()删除当前节点</li>
+<li>ele.insertAgjacentHTML(‘position’,‘HTMLText’)和ele.insertAgjacentHTML(‘position’,ele)用来插入节点；<br>
+部分实现方式如下：</li>
+</ul>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//实现swapNode方法</span><br><span class="line">if(window.Node &amp;&amp; !<span class="keyword">Node</span>.<span class="title">prototype</span>.swapNode)&#123;</span><br><span class="line">  <span class="keyword">Node</span>.<span class="title">prototype</span>.swapNode = function(<span class="keyword">node</span><span class="title">)&#123;</span></span><br><span class="line"><span class="title">    var</span> nextSibling = this.nextSibling;</span><br><span class="line">    var parentNode = this.parentNode;</span><br><span class="line">    <span class="keyword">node</span>.<span class="title">parentNode</span>.replaceChild(this, <span class="keyword">node</span><span class="title">);</span></span><br><span class="line"><span class="title">    parentNode</span>.insertBefore(<span class="keyword">node</span><span class="title">, nextSibling</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">//实现removeNode</span><br><span class="line">if(window.Node &amp;&amp; !<span class="keyword">Node</span>.<span class="title">prototype</span>.removeNode)&#123;</span><br><span class="line">  <span class="keyword">Node</span>.<span class="title">prototype</span>.removeNode = function()&#123;</span><br><span class="line">    this.parentNode.removeChild(this);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//insertAdjacentHTML和insertAdjacentElement可以用insertBefore代替</span><br><span class="line">//由于有现成方法替换，这里不写具体实现了</span><br></pre></td></tr></table></figure>
+<h3><span id="2-注册事件">2. 注册事件</span></h3>
+<p>标准的绑定方法有两种，addEventListener和attachEvent前者是标准浏览器支持的API，后者是IE8以下浏览器支持的API:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例如给一个button注册click事件</span></span><br><span class="line"><span class="keyword">var</span> el = <span class="built_in">document</span>.getElementById(<span class="string">'button'</span>);  <span class="comment">//button是一个&lt;button&gt;元素</span></span><br><span class="line"><span class="keyword">var</span> handler = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;alert(<span class="string">"button clicked."</span>);&#125;;</span><br><span class="line"><span class="keyword">if</span>(el.addEventLister)&#123;</span><br><span class="line">    el.addEventListener(<span class="string">"click"</span>, handler,<span class="literal">false</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(el.attachEvent)&#123;</span><br><span class="line">    el.attachEvent(<span class="string">"onclick"</span>, handler);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是：</p>
+<ul>
+<li>addEventLister的第一个参数事件类型是不加on前缀的，而attachEvent中需要加on前缀;</li>
+<li>addEventLister中的事件回调函数中的this指向事件元素target本身，而attachEvent中的事件回调函数的this指向的是window;</li>
+<li>addEventLister有第三个参数，true表示事件工作在捕获阶段，false为冒泡阶段(默认值:false)。而attachEvent只能工作在冒泡阶段;</li>
+<li>解除事件方法标准方法removeListen()，在IE8中，对应使用detachEvent()。注意，他们和上面的注册方法一一对应，不能混用;</li>
+<li>阻止默认事件标准方法 event.preventDefault(), 在IE8中，使用 event.returnValue = false;</li>
+<li>阻止冒泡的方法 event.stopPropagation(), 在IE8中，使用 event.cancelBubble = true;</li>
+<li>老版本 IE 中，事件函数内部的 this 不是被监听元素本身，而是 window 。故应该使用 call 改变 this 指向。</li>
+</ul>
+<h3><span id="3-事件对象">3. 事件对象</span></h3>
+<ul>
+<li>e.eventPhase 事件阶段，IE8及以前不支持，因为那时不支持捕获</li>
+<li>e.target 始终是触发事件的对象。IE8以前用srcElement</li>
+<li>ie8以前用window.event获得事件对象，而不是回调函数的参数e</li>
+</ul>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span><span class="params">(e)</span></span>&#123;&#125;</span><br><span class="line">  <span class="keyword">return</span> e || window.event;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 兼容<span class="keyword">target</span></span><br><span class="line"><span class="function"><span class="keyword">function</span><span class="params">(e)</span></span>&#123;</span><br><span class="line">  <span class="keyword">target</span> = e.<span class="keyword">target</span> || e.srcElement;</span><br><span class="line">  //<span class="keyword">do</span> something <span class="keyword">else</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="4-获取鼠标在页面上的位置">4. 获取鼠标在页面上的位置</span></h3>
+<p>ie8以前没有完整的位置属性，部分属性需要通过已有的属性计算得到：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scrollTop = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line"><span class="keyword">var</span> scrollLeft = <span class="built_in">document</span>.documentElement.scrollLeft || <span class="built_in">document</span>.body.scrollLeft;</span><br><span class="line"><span class="keyword">var</span> pageX = e.pageX || e.x || e.clientX + scrollLeft;</span><br><span class="line"><span class="keyword">var</span> pageY = e.pageY || e.y || e.clientY + scrollTop;</span><br></pre></td></tr></table></figure>
+<h3><span id="5-取消用户的文本的选择多为移动端">5. 取消用户的文本的选择(多为移动端)</span></h3>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">window</span><span class="selector-class">.getSelection</span> ? <span class="selector-tag">window</span><span class="selector-class">.getSelection</span>()<span class="selector-class">.removeAllRanges</span>() : <span class="selector-tag">document</span><span class="selector-class">.selection</span><span class="selector-class">.empty</span>();</span><br></pre></td></tr></table></figure>
+<h2><span id="浏览器hack">浏览器Hack</span></h2>
+<h3><span id="1-快速判断-ie-浏览器版本">1. 快速判断 IE 浏览器版本</span></h3>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--[if IE 8]&gt; ie8 &lt;![endif]--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--[if IE 9]&gt; ie9 &lt;![endif]--&gt;</span></span><br></pre></td></tr></table></figure>
+<h3><span id="2-快速判断safari浏览器">2. 快速判断Safari浏览器</span></h3>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">var isSafari</span>  = /a/.__proto__==<span class="string">'//'</span>;</span><br></pre></td></tr></table></figure>
+<h3><span id="3-判断是否为chrome浏览器">3. 判断是否为Chrome浏览器</span></h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isChrome = <span class="built_in">Boolean</span>(<span class="built_in">window</span>.chrome);</span><br></pre></td></tr></table></figure>
+<hr>
+<p>本文中只是讨论了部分常见的浏览器兼容性问题，之后会作补充</p>
+</div><div class="post-copyright"><blockquote><p>原文作者: Cobb</p><p>原文链接: <a href="http://wzwdi.cn/08/浏览器兼容性问题解决方案/">http://wzwdi.cn/08/浏览器兼容性问题解决方案/</a></p><p>版权声明: 转载请注明出处(必须保留原文作者署名原文链接)</p></blockquote></div><div class="tags"><a href="../../tags/css/">CSS</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="../../07/CSS三角形(转载)/" class="next">CSS三角形【转载】</a></div><div id="comments"><div id="SOHUCS" sid="08/浏览器兼容性问题解决方案/"></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">HTML 和 CSS 兼容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">1. 浏览器的初始化样式不同导致的兼容性问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">2. 浏览器对 CSS3 的支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">3. 透明属性的兼容设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">4. 外边距合并问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">5、chrome下默认文本解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">6. 部分浏览器设置较小高度标签失去控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">7. CSS Hack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">交互兼容性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">1. 获取兄弟节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">2. 注册事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">3. 事件对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">4. 获取鼠标在页面上的位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">5. 取消用户的文本的选择(多为移动端)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">浏览器Hack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">1. 快速判断 IE 浏览器版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">2. 快速判断Safari浏览器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">3. 判断是否为Chrome浏览器</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href>常见浏览器兼容性问题解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="../../07/CSS三角形(转载)/">CSS三角形【转载】</a></li><li class="post-list-item"><a class="post-list-link" href="../../07/CSS实现水平垂直居中/">CSS实现水平垂直居中</a></li><li class="post-list-item"><a class="post-list-link" href="../../07/Git操作指南/">Git操作指南</a></li><li class="post-list-item"><a class="post-list-link" href="../../04/Hexo-Github搭建博客/">Hexo+Github搭建博客</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="../../tags/css/" style="font-size: 15px;">CSS</a> <a href="../../tags/hexo/" style="font-size: 15px;">hexo</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/03/">三月 2019</a></li></ul></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="../../." rel="nofollow">Cobb.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-135450861-1','auto');ga('send','pageview');
+</script><script type="text/javascript" src="../../js/search.json.js?v=2.0.3"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
   }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-    
-    
-  
-  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="../../lib/canvas-nest/canvas-nest.min.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="../../lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="../../lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="../../js/utils.js?v=7.1.0"></script>
-
-  <script src="../../js/motion.js?v=7.1.0"></script>
-
-
-
-  
-  
-
-
-  <script src="../../js/schemes/muse.js?v=7.1.0"></script>
-
-
-
-  
-  <script src="../../js/scrollspy.js?v=7.1.0"></script>
-<script src="../../js/post-details.js?v=7.1.0"></script>
-
-
-
-  
-
-
-  <script src="../../js/next-boot.js?v=7.1.0"></script>
-
-
-  
-
-  
-
-  
-
-  
-
-
-  
-
-
-  
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
+});</script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script type="text/javascript" src="../../js/toctotop.js?v=2.0.3" async></script><link rel="stylesheet" type="text/css" href="../../share/css/share.css"><script type="text/javascript" src="../../share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="../../share/js/qrcode.js" charset="utf-8"></script><script>window._config = { showScore: true };
+(function(){ 
+  var appid = 'cyu75dyHj'; 
+  var conf = 'd65addb019cba78389e69e13b883ba48'; 
+  var width = window.innerWidth || document.documentElement.clientWidth; 
+  var nodes =document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+  if (/(Android|iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) && width < 750) {  
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+  }
+  else { 
+    var loadJs=function(d,a){
+      var b=document.createElement("script");b.setAttribute("type","text/javascript");
+      b.setAttribute("charset","UTF-8");
+      b.setAttribute("src",d);
+      if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+      nodes.appendChild(b)
+    };
+    loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); 
+  } 
+  var loadCss = function(cssString){  
+    var style=document.createElement("style");  
+    style.setAttribute("type", "text/css");  
+    if(style.styleSheet){// IE  
+        style.styleSheet.cssText = cssString;  
+    } else {// w3c  
+        var cssText = document.createTextNode(cssString);  
+        style.appendChild(cssText);  
+    }
+    nodes.appendChild(style);
+  }
+  window.onload=function(){loadCss('.module-hot-topic,.module-cmt-float-bar{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .cbox-prompt-w span.prompt-empty-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w .form-text-w span.text-null,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w a.comment-link-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w span.comment-text-w,#SOHUCS #SOHU_MAIN .module-cmt-footer .section-service-w div.service-wrap-w a:hover,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w span.wrap-name-w,#SOHUCS #SOHU_MAIN .module-cmt-list .action-click-gw span.click-disable-eg a em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li div.title-name-gw,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number .comment-number span.cy-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number span.comment-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active,#SOHUCS #SOHU_MAIN .module-cmt-list .msg-wrap-gw .wrap-action-gw .action-click-gw span a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .picture-box-gw div.box-action-gw a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-action-gw .action-click-gw span a:hover em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-user-gw span.user-name-gw a{color:#40759b!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-r,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-l,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-r{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-l{background:#FFF!important;top:-2px!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-function-w .uploading-wrapper-dw div.wrapper-image-dw,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-main,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w div.form-text-w,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-list .module-cmt-box .post-wrap-w div.post-wrap-main{border:1px solid #e6e6e6!important;border-radius:20px 20px 20px 20px;margin:0!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw{width:130px!important;height:34px!important;line-height:33px!important;font-size:17px!important;background:#5483b1!important;border-radius:20px!important;color:#FFF!important;-webkit-box-shadow:0 -1px 4px #5483b1 inset;box-shadow:0 -1px 10px #5483b1 inset}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw:before{content:"发表评论"}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a:hover .btn-fw{color:#40759b!important;background:#FFF!important}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li{background:none!important;border-bottom:1px solid #e6e6e6}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active{border:1px solid #e6e6e6;border-radius:10px 10px 0 0;border-bottom:none}#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li .title-name-gw div.title-name-gw-tag{background:#5483b1!important;border-radius:3px}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type div.cmt-list-border{background-color:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item{border:1px solid #e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo{text-align:center;line-height:40px;border-radius:50%!important;background:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo:before{content:"畅";font-size:22px;color:#FFF}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text,#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text i{color:#5483b1!important}#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w{background:#FFF!important}@media screen and (min-width:900px){#SOHUCS #SOHU_MAIN .module-mobile-cmt-list .list-wrapper-wap .list-container-wap .list-item-wap .list-content-wrapper-wap .cmt-list-image-container .cmt-list-image{max-width: 100%;}}');};
+})();
+function removeElement(_element){
+     var _parentElement = _element.parentNode;
+     if(_parentElement){
+            _parentElement.removeChild(_element);
+     }
+}
+var removeAD = document.createElement("div");
+removeAD.id = 'removeAD';
+var adInterval1 = setInterval(function() {
+  if(document.querySelector("#feedAv")){
+    document.querySelector("[node-type=cmt-list]").appendChild(removeAD);
+    document.querySelector("#removeAD").appendChild(document.querySelector("#feedAv"));
+    removeElement(document.querySelectorAll("#feedAv")[0]);
+    document.querySelector("#removeAD").style.display="none"
+    clearInterval(adInterval1);
+  }
+},1000);
+var adInterval2 = setInterval(function() {
+  if(document.querySelector("#pop_ad")){
+    removeElement(document.querySelector("#pop_ad"));
+    clearInterval(adInterval2);
+  }
+}, 1000);</script><script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script></body></html>
